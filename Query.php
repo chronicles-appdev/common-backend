@@ -277,7 +277,7 @@ class  Query
     {
 
         //$sql = "UPDATE 'activation_code' SET expiry_date = expiry_date + 43 WHERE id = 1";
-        $sql = "UPDATE activation_code SET expiry_date = DATE_ADD(expiry_date, INTERVAL $days DAY), used = used + 1, student_id = $student_id WHERE id = $id";
+        $sql = "UPDATE igcse SET expiry_date = DATE_ADD(expiry_date, INTERVAL $days DAY), used = used + 1, student_id = $student_id WHERE id = $id";
         $stmt = $this->pdo->prepare($sql);
 
         if ($stmt->execute()) {
@@ -293,7 +293,7 @@ class  Query
     {
 
 
-        $sql = "UPDATE activation_code SET expiry_date = NOW() WHERE id = $id";
+        $sql = "UPDATE igcse SET expiry_date = NOW() WHERE id = $id";
         $stmt = $this->pdo->prepare($sql);
 
         if ($stmt->execute()) {

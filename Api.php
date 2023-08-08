@@ -471,6 +471,48 @@ class  Api extends Rest
             $this->throwError(FAILED_RESPONSE, $e->getMessage());
         }
     }
+    public function activate1()
+    {
+        $act_code = $this->validateParameter('act_code', $this->param['act_code'], STRING, false);
+        $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
+
+
+        $query = new Query;
+        try {
+
+            $results = $query->get_single('igcse', array('key' => $act_code), 'id', 'desc');
+
+            if ($results) {
+                $days = $results->no_of_month * 30;
+
+
+
+                if (($results->used) < ($results->no_of_users)) {
+
+                    $first = $query->update_fisrt($results->id);
+                    if ($first) {
+                        $edit =  $query->update_act($days, $results->id, $student_id);
+                    }
+
+
+                    //$edit =  $query->update_act($days, $results->id, $student_id);
+
+                    if ($edit) {
+                        $data = ['results' => $results];
+                        $this->returnResponse(SUCCESS_RESPONSE, $data);
+                    } else {
+                        $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+                    }
+                } else {
+                    $this->returnResponse(FAILED_RESPONSE, "This Activation Code has been Used.");
+                }
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Invalid Activation Code.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     public function student()
     {
         $fullname = $this->validateParameter('fullname', $this->param['fullname'], STRING, false);
@@ -620,32 +662,4 @@ class  Api extends Rest
             $this->throwError(FAILED_RESPONSE, $e->getMessage());
         }
     }
-    // public function setQuestions()
-    // {
-    //     $test = $this->validateParameter('test', $this->param['test'], STRING, false);
-    //     $year = $this->validateParameter('year', $this->param['year'], STRING, false);
-    //     $subject = $this->validateParameter('subject', $this->param['subject'], STRING, false);
-    //     $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
-
-
-    //     $query = new Query;
-    //     $num_question = $query->get_single('tests', array('id' => $test), 'id', 'asc')->num_question;
-    //     $tests = $query->get_questions($year, $subject, $num_question);
-    //     $no = 0;
-    //     $tt_id = $query->create('test_taken', array('subject_id' => $subject, 'test_id' => $test, 'year_id' => $year));
-    //     foreach ($tests as $test) {
-
-    //         $no++;
-    //         $save = $query->create('marking', array('question_id' => $test->id, 'test_taken_id' => $tt_id));
-    //     }
-    //     if ($no === $num_question) {
-
-    //         $message = 'Questions  Created Successfully';
-    //         $this->returnResponse(SUCCESS_RESPONSE, 'success');
-    //     } else {
-
-    //         $message = 'Failed to Create Questions';
-    //         $this->returnResponse(FAILED_RESPONSE, 'failed');
-    //     }
-    // }
 }

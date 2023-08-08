@@ -9,11 +9,10 @@ class DbConnect
     private $server = 'localhost';
 
 
-    private $dbname = 'ulearnlm_igcse';
+    private $dbname = 'ulearnlm_common';
     private $user = 'ulearnlm_ali';
     private $pass = 'FuTa@(2017)';
-    //  private $user = 'root';
-    //  private $pass = '';
+
 
     public function connect()
     {
