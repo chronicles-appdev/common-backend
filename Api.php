@@ -653,7 +653,7 @@ class  Api extends Rest
 
             $resul = $query->get_count('student_subjects', array('student_id' => $student_id, 'active' => 1), 'id', 'desc');
 
-            if ($resul >= 5) {
+            if ($resul >= 1) {
                 $data = ['testDetail' => $resul];
                 $this->returnResponse(SUCCESS_RESPONSE, $data);
             } else {
