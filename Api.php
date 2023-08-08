@@ -563,6 +563,7 @@ class  Api extends Rest
         $subject = $this->validateParameter('subject', $this->param['subject'], STRING, false);
         $student_id = $this->validateParameter('student_id', $this->param['student_id'], STRING, false);
 
+        //new
 
         $query = new Query;
         $num_question = $query->get_single('tests', array('id' => $test), 'id', 'asc')->num_question;
