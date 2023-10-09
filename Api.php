@@ -131,6 +131,28 @@ class  Api extends Rest
             $this->throwError(FAILED_RESPONSE, $e->getMessage());
         }
     }
+    public function getPassage()
+    {
+
+        $passage_id = $this->validateParameter('passage_id', $this->param['passage_id'], STRING, false);
+
+
+        $query = new Query;
+        try {
+
+            $resu = $query->get_single('passage', array('id' => $passage_id), 'id', 'desc');
+            // $results = $query->get_single('questions', array('id' => $resu->question_id), 'id', 'desc');
+
+            if ($resu) {
+                $data = ['passage' => $resu];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     public function getHistory()
     {
 
