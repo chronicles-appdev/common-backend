@@ -556,6 +556,28 @@ class  Api extends Rest
 
     }
 
+    public function getExamDetails()
+    {
+
+        $test_id = $this->validateParameter('test_id', $this->param['test_id'], STRING, false);
+
+
+        $query = new Query;
+        try {
+
+            $resul = $query->get_exam_details($test_id);
+
+
+            if ($resul) {
+                $data = ['examDetails' => $resul];
+                $this->returnResponse(SUCCESS_RESPONSE, $data);
+            } else {
+                $this->returnResponse(FAILED_RESPONSE, "Error Please Try Again.");
+            }
+        } catch (Exception $e) {
+            $this->throwError(FAILED_RESPONSE, $e->getMessage());
+        }
+    }
     public function getTestDetails()
     {
 

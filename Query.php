@@ -45,6 +45,22 @@ class  Query
         return $multi;
     }
 
+    public function get_exam_details($tt_id)
+    {
+
+        $stmt = $this->pdo->prepare("SELECT years.year_name, tests.test_name FROM takeTest  inner join years  ON  year.id = takeTest.year_id  inner join tests on tests.id = takeTest.test_id where  takeTest.id = $tt_id  ORDER BY takeTest.id ASC");
+
+        //$stmt = $this->pdo->prepare("SELECT marking.id, questions.questionText, questions.optionA, questions.optionB, questions.optionC, questions.OptionD, questions.images FROM marking   INNER JOIN questions  ON  marking.question_id = questions.id where  marking.test_taken_id = $tt_id ");
+
+        // $stmt = $this->pdo->prepare("SELECT * FROM marking   where  test_taken_id = $tt_id ");
+
+
+        $stmt->execute();
+        $multi = $stmt->fetch(PDO::FETCH_OBJ);
+
+        return $multi;
+    }
+
     public function get_questions($year_id, $subject_id, $num_question)
     {
 
