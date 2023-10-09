@@ -559,13 +559,13 @@ class  Api extends Rest
     public function getExamDetails()
     {
 
-        $test_id = $this->validateParameter('test_id', $this->param['test_id'], STRING, false);
+        $tt_id = $this->validateParameter('tt_id', $this->param['tt_id'], INTEGER, false);
 
 
         $query = new Query;
         try {
 
-            $resul = $query->get_exam_details($test_id);
+            $resul = $query->get_exam_details($tt_id);
 
 
             if ($resul) {
