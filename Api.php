@@ -623,7 +623,7 @@ class  Api extends Rest
             $no++;
             $save = $query->create('marking', array('question_id' => $test->id, 'test_taken_id' => $tt_id, 'correct_option' => $test->correct_option));
         }
-        if ($no == $num_question) {
+        if ($no > 0) {
             $message = 'Test  Created Successfully';
             $this->returnResponse(SUCCESS_RESPONSE, $tt_id);
         } else {
